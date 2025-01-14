@@ -95,7 +95,8 @@ func CreateIdenticon(from string, options ...OptionsFunc) (image.Image, error) {
 		}
 	}
 
-	// start at the 6th byte
+	// start at the 4th byte since the first 3 are
+	// reserved for the color
 	hexIdx := 6
 	for i := 0; i < opts.Size; i++ {
 		for j := 0; j <= opts.Size/2; j++ {
@@ -104,6 +105,8 @@ func CreateIdenticon(from string, options ...OptionsFunc) (image.Image, error) {
 			if err != nil {
 				return nil, err
 			}
+			// we use the LSB to determine if the cell
+			// is on or off
 			if bt%2 > 0 {
 				bit = 1
 			}
