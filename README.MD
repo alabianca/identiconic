@@ -6,7 +6,7 @@ These identicons are symetrical to give them an avatar type of look.
 
 ## Usage
 ```go
-// create the identicon as an image.Image
+// create the identicon from a UUID as an image.Image
 img, err := identiconic.CreateIdenticon("177de69e-aca8-47cd-9643-5cf97727b781")
 if err != nil {
     panic(err)
@@ -28,3 +28,9 @@ The color is computed based on the first 3 bytes of the input string. Though you
 blue := color.RGBA{13, 117, 255, 255}
 img, err := identiconic.CreateIdenticon("177de69e-aca8-47cd-9643-5cf97727b781", identiconic.WithColor(blue))
 ```
+
+### Examples
+<img src="https://github.com/alabianca/identiconic/blob/main/examples/example1.png"/>
+<img src="https://github.com/alabianca/identiconic/blob/main/examples/example1_color.png"/>
+<img src="https://github.com/alabianca/identiconic/blob/main/examples/example2.png"/>
+<img src="https://github.com/alabianca/identiconic/blob/main/examples/example3.png"/>

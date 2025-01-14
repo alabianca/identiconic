@@ -10,7 +10,7 @@ import (
 )
 
 func TestIntCreateIdenticon(t *testing.T) {
-	img, err := identiconic.CreateIdenticon("177de69e-aca8-47cd-9643-5cf97727b781")
+	img, err := identiconic.CreateIdenticon("a1e5577a-ce13-498e-8781-fb2f598992e3")
 	if err != nil {
 		t.Fatalf("expected no error, but got %s", err)
 	}
