@@ -59,6 +59,10 @@ func WithColor(col color.Color) OptionsFunc {
 	}
 }
 
+// CreateIdenticon creates the identicon from the given input string.
+// An error is returned when the Options.Size is <= 0 or larger than MaxSize.
+// We also return an error if we are unable to calculate the color based on the
+// first 3 bytes of the input string
 func CreateIdenticon(from string, options ...OptionsFunc) (image.Image, error) {
 	h := sha512.Sum512([]byte(from))
 	hxstr := hex.EncodeToString(h[:])
