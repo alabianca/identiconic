@@ -47,3 +47,4 @@ img, err := identiconic.CreateIdenticon("177de69e-aca8-47cd-9643-5cf97727b781", 
 <img src="https://github.com/alabianca/identiconic/blob/main/examples/example1_color.png"/>
 <img src="https://github.com/alabianca/identiconic/blob/main/examples/example2.png"/>
 <img src="https://github.com/alabianca/identiconic/blob/main/examples/example3.png"/>
+<img src="https://github.com/alabianca/identiconic/blob/main/examples/example4.png"/>
