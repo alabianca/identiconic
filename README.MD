@@ -1,1 +1,30 @@
-# TODO
+# Identiconic
+Create [identicons](https://en.wikipedia.org/wiki/Identicon) just like GitHub.
+You can use this package to create default avatars for your users or accounts.
+The generated avatars will be unique to the given string (usually in the form of a UUID).
+These identicons are symetrical to give them an avatar type of look.
+
+## Usage
+```go
+// create the identicon as an image.Image
+img, err := identiconic.CreateIdenticon("177de69e-aca8-47cd-9643-5cf97727b781")
+if err != nil {
+    panic(err)
+}
+out, err := os.Create("out.png")
+if err != nil {
+    panic(err)
+}
+defer out.Close()
+// write the image to a png file
+if err := png.Encode(out, img); err != nil {
+    panic(err)
+}
+```
+
+### Where does the color come from
+The color is computed based on the first 3 bytes of the input string. Though you can override this behavior by providing the `identiconic.WithColor(color)` option.
+```go
+blue := color.RGBA{13, 117, 255, 255}
+img, err := identiconic.CreateIdenticon("177de69e-aca8-47cd-9643-5cf97727b781", identiconic.WithColor(blue))
+```

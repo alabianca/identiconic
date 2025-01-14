@@ -16,6 +16,7 @@ func getDefaultOptions() *Options {
 	return &Options{
 		Size:     10,
 		CellSize: 20,
+		Color:    color.RGBA{255, 255, 255, 255}, // white
 	}
 }
 
@@ -29,6 +30,10 @@ type Options struct {
 	// Determines the size of a given cell in the resulting image
 	// ie: CellSize of 20 will result in each colored cell to be 20x20 pixels
 	CellSize int
+	// Override the default behavior that computes the color of the identicon
+	// based on the first 3 bytes of the color input. Use this option if you want
+	// all of your identicons to have a given color
+	Color color.Color
 }
 
 type OptionsFunc func(*Options)
@@ -44,6 +49,13 @@ func WithSize(size int) OptionsFunc {
 func WithCellSize(size int) OptionsFunc {
 	return func(o *Options) {
 		o.CellSize = size
+	}
+}
+
+// WithColor applies the given color to the identicon
+func WithColor(col color.Color) OptionsFunc {
+	return func(o *Options) {
+		o.Color = col
 	}
 }
 
@@ -67,10 +79,16 @@ func CreateIdenticon(from string, options ...OptionsFunc) (image.Image, error) {
 		grid[i] = make([]int, opts.Size)
 	}
 
-	// the first 3 bytes in the hex string will determine the color
-	r, g, b, err := extractColor(hxstr[0:6])
-	if err != nil {
-		return nil, err
+	r, g, b, _ := opts.Color.RGBA()
+	var err error
+	// check if a color option was provided, if not,
+	// we calculate the color based on the from string
+	if isWhite(opts.Color) {
+		// the first 3 bytes in the hex string will determine the color
+		r, g, b, err = extractColor(hxstr[0:6])
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	// start at the 6th byte
@@ -118,12 +136,20 @@ func drawCell(img *image.RGBA, col color.Color, offsetX, offsetY, size int) {
 	}
 }
 
-func extractColor(str string) (r, g, b int, err error) {
+func extractColor(str string) (r, g, b uint32, err error) {
 	h, s, v, err := extractHsv(str)
 	if err != nil {
 		return
 	}
 	return hsvToRGB(h, s, v)
+}
+
+func isWhite(c color.Color) bool {
+	r, g, b, a := c.RGBA()
+	if r != 0xffff || g != 0xffff || b != 0xffff || a != 0xffff {
+		return false
+	}
+	return true
 }
 
 // extractHsv extracts hue, saturation and value
@@ -146,7 +172,7 @@ func extractHsv(str string) (float64, float64, float64, error) {
 	return h, s, v, nil
 }
 
-func hsvToRGB(h, s, v float64) (r, g, b int, err error) {
+func hsvToRGB(h, s, v float64) (r, g, b uint32, err error) {
 	if h > 360 || h < 0 || s < 0 || s > 100 || v < 0 || v > 100 {
 		err = errors.New("invalid input for hue, saturation or value")
 		return
@@ -184,6 +210,6 @@ func hsvToRGB(h, s, v float64) (r, g, b int, err error) {
 		ri, gi, bi = c, 0, x
 	}
 
-	r, g, b = int(math.Round((ri+m)*255)), int(math.Round((gi+m)*255)), int(math.Round((bi+m)*255))
+	r, g, b = uint32(math.Round((ri+m)*255)), uint32(math.Round((gi+m)*255)), uint32(math.Round((bi+m)*255))
 	return
 }

@@ -26,9 +26,9 @@ func TestHsvToRGB(t *testing.T) {
 		hue     float64
 		sat     float64
 		val     float64
-		wantR   int
-		wantG   int
-		wantB   int
+		wantR   uint32
+		wantG   uint32
+		wantB   uint32
 		wantErr error
 	}{
 		{
