@@ -1,4 +1,5 @@
 <img src="https://github.com/alabianca/identiconic/blob/main/gopher_logo.png"/>
+
 # Identiconic
 Create [identicons](https://en.wikipedia.org/wiki/Identicon) just like GitHub.
 You can use this package to create default avatars for your users or accounts.

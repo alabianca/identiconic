@@ -10,6 +10,7 @@ import (
 func main() {
 	width, height := 100, 100
 	img := image.NewRGBA(image.Rect(0, 0, width, height))
+	const cellSize = 20
 
 	// Define the pixel art for the gopher
 	matrix := generateGopherMatrix()
