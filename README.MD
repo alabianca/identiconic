@@ -28,20 +28,29 @@ if err := png.Encode(out, img); err != nil {
 The color is computed based on the first 3 bytes of the input string. Though you can override this behavior by providing the `identiconic.WithColor(color)` option.
 ```go
 blue := color.RGBA{13, 117, 255, 255}
-img, err := identiconic.CreateIdenticon("177de69e-aca8-47cd-9643-5cf97727b781", identiconic.WithColor(blue))
+img, err := identiconic.CreateIdenticon(
+    "177de69e-aca8-47cd-9643-5cf97727b781", 
+    identiconic.WithColor(blue),
+    )
 ```
 
 ### Sizing
 By default a grid of 10x10 cells is used to generate the identicon, but that can be overriden. 10 is the max. 
 ```go
 // generate an identicon with a 7x7 grid
-img, err := identiconic.CreateIdenticon("177de69e-aca8-47cd-9643-5cf97727b781", identiconic.WithSize(7))
+img, err := identiconic.CreateIdenticon(
+    "177de69e-aca8-47cd-9643-5cf97727b781", 
+    identiconic.WithSize(7),
+    )
 ```
 
 You can also change the default `CellSize` (defaults to 20) to create larger or smaller images
 ```go
 // generate an identicon with a 7x7 grid
-img, err := identiconic.CreateIdenticon("177de69e-aca8-47cd-9643-5cf97727b781", identiconic.WithCellSize(10))
+img, err := identiconic.CreateIdenticon(
+    "177de69e-aca8-47cd-9643-5cf97727b781", 
+    identiconic.WithCellSize(10),
+    )
 ```
 
 ### Examples
